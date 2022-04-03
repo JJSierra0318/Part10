@@ -1,12 +1,13 @@
-import { View, StyleSheet, Pressable, Text } from 'react-native';
+import { View, StyleSheet, Pressable } from 'react-native';
+import Text from './Text'
 import Constants from 'expo-constants';
 
 const styles = StyleSheet.create({
   container: {
     paddingTop: Constants.statusBarHeight,
     height: 75,
-    marginTop: 25,
-    backgroundColor: '#24292e'
+    backgroundColor: '#24292e',
+    marginBottom: 10,
   },
   // ...
 });
@@ -14,7 +15,7 @@ const styles = StyleSheet.create({
 const AppBar = () => {
   return <View style={styles.container}>
     <Pressable>
-      <Text>Repositories</Text>
+      <Text color='primary'>Repositories</Text>
     </Pressable>
   </View>;
 };
