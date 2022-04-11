@@ -25,6 +25,7 @@ const RepositoryList = () => {
       renderItem={({item}) => (
         <RepositoryItem data={item} />
       )}
+      keyExtractor={(item, index) => index.toString()}
     />
   );
 };
