@@ -10,7 +10,7 @@ const apolloClient = createApolloClient()
 
 const App = () => {
 
-  console.log(Constants.manifest)
+  console.log(Constants.manifest.extra)
 
   return (
     <>
