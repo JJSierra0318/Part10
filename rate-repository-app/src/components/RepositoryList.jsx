@@ -14,14 +14,13 @@ const styles = StyleSheet.create({
 const ItemSeparator = () => <View style={styles.separator} />;
 
 const RepositoryList = () => {
-
   const result = useQuery(GET_REPOSITORIES, {
     fetchPolicy: 'cache-and-network',
   })
 
   if (result.loading) return <Text>loading...</Text>
   
-  const repositoryNodes = result.data.repositories
+  const repositoryNodes = result.data
     ? result.data.repositories.edges.map(edge => edge.node)
     : []
 
