@@ -33,7 +33,7 @@ const AppBar = () => {
       <Pressable style={{ padding: 10 }}>
         <Link to='/'><Text color='primary'>Repositories</Text></Link>
       </Pressable>
-      {data.me
+      {data?.me
         ? <Pressable style={{ padding: 10 }} onPress={async () => {
           await authStorage.removeAccessToken()
           apolloClient.resetStore()
