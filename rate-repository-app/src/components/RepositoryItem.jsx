@@ -62,7 +62,7 @@ const RepositoryItem = ( {data} ) => {
   }
 
   return (
-    <View style={repoStyles.container}>
+    <View testID="repositoryItem" style={repoStyles.container}>
       <View style={headerStyles.container}>
         <View style={headerStyles.avatarContainer}>
           <Image
