@@ -32,6 +32,7 @@ query getRepo($id: ID!) {
     forksCount
     stargazersCount
     ratingAverage
+    url
   }
 }
 `

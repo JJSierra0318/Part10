@@ -1,6 +1,8 @@
 import { useParams } from "react-router-native"
+
 import useRepository from "../hooks/useRepository";
 import RepositoryItem from "./RepositoryItem";
+
 
 const SingleRepository = () => {
 
@@ -10,7 +12,10 @@ const SingleRepository = () => {
   if (!repository) return null
 
   return (
-    <RepositoryItem data={repository} />
+    <>
+      <RepositoryItem data={repository} />
+    </>
+    
   )
 }
 

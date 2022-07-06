@@ -1,4 +1,7 @@
-import { View, Image, StyleSheet } from "react-native"
+import { View, Image, StyleSheet, Pressable } from "react-native"
+import { useParams } from "react-router-native"
+import * as Linking from 'expo-linking'
+
 import Text from "./Text"
 
 const repoStyles = StyleSheet.create({
@@ -45,18 +48,33 @@ const statsStyle = StyleSheet.create({
   }
 })
 
-const RepositoryItem = ( {data} ) => {
+const buttonStyle = StyleSheet.create({
+  button: {
+    backgroundColor: '#0366d6',
+    alignSelf: 'center',
+    alignItems: 'center',
+    margin: 20,
+    borderRadius: 10,
+    paddingTop: 15,
+    width: 250,
+    height: 50
+  }
+})
+
+const RepositoryItem = ({ data }) => {
+
+  const id = useParams().id
 
   let stars = ''
   if (data.stargazersCount > 999) {
-    stars = (data.stargazersCount/1000).toFixed(1) + 'k'
+    stars = (data.stargazersCount / 1000).toFixed(1) + 'k'
   } else {
     stars = data.stargazersCount
   }
 
   let forks = ''
   if (data.forksCount > 999) {
-    forks = (data.forksCount/1000).toFixed(1) + 'k'
+    forks = (data.forksCount / 1000).toFixed(1) + 'k'
   } else {
     forks = data.forksCount
   }
@@ -96,6 +114,12 @@ const RepositoryItem = ( {data} ) => {
           <Text>Rating</Text>
         </View>
       </View>
+      {id
+        ? <Pressable style={buttonStyle.button} onPress={() => {
+          Linking.openURL(data.url)}}>
+          <Text style={{color: 'white'}}>Open in GitHub</Text>
+        </Pressable>
+        : null}
     </View>
   )
 }
