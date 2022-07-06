@@ -1,9 +1,7 @@
-import { FlatList, View, StyleSheet } from 'react-native';
-import RepositoryItem from './RepositoryItem';
-import { useQuery } from '@apollo/client';
+import { FlatList, View, StyleSheet, Pressable } from 'react-native';
 
-import { GET_REPOSITORIES } from '../graphql/queries';
-import Text from './Text';
+import RepositoryItem from './RepositoryItem';
+import useRepositories from '../hooks/useRepositories';
 
 const styles = StyleSheet.create({
   separator: {
@@ -22,20 +20,19 @@ export const RepositoryListContainer = ({ repositories }) => {
     data={repositoryNodes}
     ItemSeparatorComponent={ItemSeparator}
     renderItem={({ item }) => (
-      <RepositoryItem data={item} />
+      <Pressable>
+        {console.log(item)}
+        <RepositoryItem data={item} />
+      </Pressable>
     )}
     keyExtractor={(item, index) => index.toString()}
   />
 }
 
 const RepositoryList = () => {
-  const result = useQuery(GET_REPOSITORIES, {
-    fetchPolicy: 'cache-and-network',
-  })
+  const { repositories } = useRepositories()
 
-  if (result.loading) return <Text>loading...</Text>
-
-  return <RepositoryListContainer repositories={result}/>;
+  return <RepositoryListContainer repositories={repositories}/>;
 };
 
 export default RepositoryList;
