@@ -1,13 +1,16 @@
 import { useParams } from "react-router-native"
-import Text from "./Text"
+import useRepository from "../hooks/useRepository";
+import RepositoryItem from "./RepositoryItem";
 
 const SingleRepository = () => {
 
-  const id = useParams();
-  console.log(id);
+  const { id } = useParams();
+  const { repository } = useRepository({ id })
+  
+  if (!repository) return null
 
   return (
-    <Text>HELLO</Text>
+    <RepositoryItem data={repository} />
   )
 }
 
