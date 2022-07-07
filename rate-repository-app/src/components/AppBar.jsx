@@ -33,6 +33,9 @@ const AppBar = () => {
       <Pressable style={{ padding: 10 }}>
         <Link to='/'><Text color='primary'>Repositories</Text></Link>
       </Pressable>
+      <Pressable style={{ padding: 10 }}>
+        <Link to='/newReview'><Text color='primary'>Create a review</Text></Link>
+      </Pressable>
       {data?.me
         ? <Pressable style={{ padding: 10 }} onPress={async () => {
           await authStorage.removeAccessToken()
