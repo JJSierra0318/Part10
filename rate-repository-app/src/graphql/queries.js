@@ -33,6 +33,20 @@ query getRepo($id: ID!) {
     stargazersCount
     ratingAverage
     url
+    reviews {
+      edges {
+        node {
+          id
+          text
+          rating
+          createdAt
+          user {
+            id
+            username
+          }
+        }
+      }
+    }
   }
 }
 `
