@@ -33,16 +33,18 @@ const AppBar = () => {
       <Pressable style={{ padding: 10 }}>
         <Link to='/'><Text color='primary'>Repositories</Text></Link>
       </Pressable>
-      <Pressable style={{ padding: 10 }}>
-        <Link to='/newReview'><Text color='primary'>Create a review</Text></Link>
-      </Pressable>
       {data?.me
-        ? <Pressable style={{ padding: 10 }} onPress={async () => {
-          await authStorage.removeAccessToken()
-          apolloClient.resetStore()
-        }}>
-          <Text color='primary'>Sign Out</Text>
-        </Pressable>
+        ? <>
+          <Pressable style={{ padding: 10 }}>
+            <Link to='/newReview'><Text color='primary'>Create a review</Text></Link>
+          </Pressable>
+          <Pressable style={{ padding: 10 }} onPress={async () => {
+            await authStorage.removeAccessToken()
+            apolloClient.resetStore()
+          }}>
+            <Text color='primary'>Sign Out</Text>
+          </Pressable>
+        </>
         : <Pressable style={{ padding: 10 }}>
           <Link to='/SignIn'><Text color='primary'>Sign In</Text></Link>
         </Pressable>}

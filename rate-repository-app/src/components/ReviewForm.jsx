@@ -4,6 +4,7 @@ import * as yup from 'yup'
 
 import Text from "./Text";
 import FormikTextInput from "./FormikTextInput"
+import useCreateReview from "../hooks/useCreateReview";
 
 const styles = StyleSheet.create({
   button: {
@@ -21,15 +22,15 @@ const styles = StyleSheet.create({
 const ReviewFormContainer = ({ onSubmit }) => {
 
   const initialValues = {
-    ownerUsername: '',
-    repoName: '',
+    ownerName: '',
+    repositoryName: '',
     rating: '',
     review: ''
   }
 
   const validationSchema = yup.object().shape({
-    ownerUsername: yup.string().required('Repository owner name is required'),
-    repoName: yup.string().required('Repository is required'),
+    ownerName: yup.string().required('Repository owner name is required'),
+    repositoryName: yup.string().required('Repository is required'),
     rating: yup.number('Rating must be a number').min(0).max(100).required('Rating is required'),
     review: yup.string()
   })
@@ -44,8 +45,8 @@ const ReviewFormContainer = ({ onSubmit }) => {
 const ReviewForm = ({ onSubmit }) => {
   return (
     <View>
-      <FormikTextInput name="ownerUsername" placeholder="Repository owner name" />
-      <FormikTextInput name="repoName" placeholder="Repository Name" />
+      <FormikTextInput name="ownerName" placeholder="Repository owner name" />
+      <FormikTextInput name="repositoryName" placeholder="Repository Name" />
       <FormikTextInput name="rating" placeholder="Rating between 0 and 100" />
       <FormikTextInput name="review" placeholder="Review" />
       <Pressable  onPress={onSubmit} style={styles.button}>
@@ -56,9 +57,16 @@ const ReviewForm = ({ onSubmit }) => {
 }
 
 const NewReview = () => {
+  const [createReview] = useCreateReview()
 
   const onSubmit = async (values) => {
-    console.log(values)
+    const { repositoryName, ownerName, rating, review } = values
+
+    try {
+      await createReview({ repositoryName, ownerName, rating, review })
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   return <ReviewFormContainer onSubmit={onSubmit} />
