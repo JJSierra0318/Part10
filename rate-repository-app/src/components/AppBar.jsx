@@ -45,9 +45,14 @@ const AppBar = () => {
             <Text color='primary'>Sign Out</Text>
           </Pressable>
         </>
-        : <Pressable style={{ padding: 10 }}>
-          <Link to='/SignIn'><Text color='primary'>Sign In</Text></Link>
-        </Pressable>}
+        : <>
+          <Pressable style={{ padding: 10 }}>
+            <Link to='/signIn'><Text color='primary'>Sign In</Text></Link>
+          </Pressable>
+          <Pressable style={{ padding: 10 }}>
+            <Link to='/signUp'><Text color='primary'>Sign Up</Text></Link>
+          </Pressable>
+        </>}
     </ScrollView>
   </View>;
 };
