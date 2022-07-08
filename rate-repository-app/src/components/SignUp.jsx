@@ -1,6 +1,7 @@
 import { Formik } from "formik"
 import { Pressable, View, StyleSheet } from "react-native"
 import * as yup from 'yup'
+import useSignUp from "../hooks/useSignUp";
 import FormikTextInput from './FormikTextInput';
 import Text from './Text';
 
@@ -53,9 +54,16 @@ const SignUpForm = ({ onSubmit }) => {
 }
 
 const SignUp = () => {
+  const [signUp] = useSignUp()
 
   const onSubmit = async (values) => {
-    console.log(values)
+    const { username, password } = values
+
+    try {
+      signUp({ username, password })
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   return <SignUpContainer onSubmit={onSubmit} />
