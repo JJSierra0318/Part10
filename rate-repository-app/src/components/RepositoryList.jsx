@@ -1,8 +1,10 @@
 import { FlatList, View, StyleSheet, Pressable } from 'react-native';
+import { Picker } from '@react-native-picker/picker'
 
 import RepositoryItem from './RepositoryItem';
 import useRepositories from '../hooks/useRepositories';
 import { useNavigate } from 'react-router-native';
+import { useState } from 'react';
 
 const styles = StyleSheet.create({
   separator: {
@@ -10,9 +12,35 @@ const styles = StyleSheet.create({
   },
 });
 
+const sortStyle = StyleSheet.create({
+  container: {
+    alignSelf: 'center',
+    alignItems: 'stretch',
+    width: 350,
+    marginTop: 15,
+    marginBottom: 15,
+    alignContent: 'center',
+    backgroundColor: 'white'
+  }
+})
+
+const SelectOrder = ({ sortBy, setSortBy }) => {
+  return (
+    <Picker
+      selectedValue={sortBy}
+      onValueChange={(itemValue) => setSortBy(itemValue)}
+      style={sortStyle.container}
+    >
+      <Picker.Item label='Latest repositories' value='latest'/>
+      <Picker.Item label='Highest rated repositories' value='highest'/>
+      <Picker.Item label='Lowest rated repositories' value='lowest'/>
+    </Picker>
+  )
+}
+
 const ItemSeparator = () => <View style={styles.separator} />;
 
-export const RepositoryListContainer = ({ repositories }) => {
+export const RepositoryListContainer = ({ repositories, sortBy, setSortBy }) => {
 
   const navigate = useNavigate()
 
@@ -23,6 +51,7 @@ export const RepositoryListContainer = ({ repositories }) => {
   return <FlatList
     data={repositoryNodes}
     ItemSeparatorComponent={ItemSeparator}
+    ListHeaderComponent={<SelectOrder sortBy={sortBy} setSortBy={setSortBy} />}
     renderItem={({ item }) => (
       <Pressable onPress={() => navigate(`/repository/${item.id}`, {replace: true})}>
         <RepositoryItem data={item} />
@@ -33,9 +62,11 @@ export const RepositoryListContainer = ({ repositories }) => {
 }
 
 const RepositoryList = () => {
-  const { repositories } = useRepositories()
+  const [sortBy, setSortBy] = useState('latest')
 
-  return <RepositoryListContainer repositories={repositories}/>;
+  const { repositories } = useRepositories({ sortBy })
+
+  return <RepositoryListContainer repositories={repositories} sortBy={sortBy} setSortBy={setSortBy}/>;
 };
 
 export default RepositoryList;
