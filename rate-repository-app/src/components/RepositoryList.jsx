@@ -49,7 +49,7 @@ const RepositoryListHeader = ({ sortBy, setSortBy, filterBy, setFilterBy }) => {
 
 const ItemSeparator = () => <View style={styles.separator} />;
 
-export const RepositoryListContainer = ({ repositories, sortBy, setSortBy, filterBy, setFilterBy }) => {
+export const RepositoryListContainer = ({ repositories, sortBy, setSortBy, filterBy, setFilterBy, onEndReach }) => {
 
   const navigate = useNavigate()
 
@@ -60,7 +60,9 @@ export const RepositoryListContainer = ({ repositories, sortBy, setSortBy, filte
   return <FlatList
     data={repositoryNodes}
     ItemSeparatorComponent={ItemSeparator}
-    ListHeaderComponent={<RepositoryListHeader sortBy={sortBy} setSortBy={setSortBy} fitlerBy={filterBy} setFilterBy={setFilterBy}/>}
+    ListHeaderComponent={<RepositoryListHeader sortBy={sortBy} setSortBy={setSortBy} fitlerBy={filterBy} setFilterBy={setFilterBy} />}
+    onEndReached={onEndReach}
+    onEndReachedThreshold={0.5}
     renderItem={({ item }) => (
       <Pressable onPress={() => navigate(`/repository/${item.id}`, { replace: true })}>
         <RepositoryItem data={item} />
@@ -74,10 +76,20 @@ const RepositoryList = () => {
   const [sortBy, setSortBy] = useState('latest')
   const [filterBy, setFilterBy] = useState('')
   const [debouncedSearch] = useDebounce(filterBy, 500)
+  const { repositories, fetchMore } = useRepositories({ sortBy, filterBy: debouncedSearch, first: 8 })
 
-  const { repositories } = useRepositories({ sortBy, filterBy: debouncedSearch })
+  const onEndReach = () => {
+    fetchMore();
+  }
 
-  return <RepositoryListContainer repositories={repositories} sortBy={sortBy} setSortBy={setSortBy} filterBy={filterBy} setFilterBy={setFilterBy}/>;
+  return <RepositoryListContainer
+    repositories={repositories}
+    sortBy={sortBy}
+    setSortBy={setSortBy}
+    filterBy={filterBy}
+    setFilterBy={setFilterBy}
+    onEndReach={onEndReach}
+  />;
 };
 
 export default RepositoryList;

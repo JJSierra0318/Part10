@@ -49,7 +49,7 @@ const RepositoryInfo = ({ repository }) => {
 }
 
 const ReviewItem = ({ review }) => {
-  console.log(review.createdAt)
+
 const date = format(new Date(review.createdAt), 'dd.MM.yyyy')
 
   return (
