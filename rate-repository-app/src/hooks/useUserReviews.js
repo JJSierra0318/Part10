@@ -7,7 +7,7 @@ const useUserReviews = () => {
     includeReviews: true,
   };
 
-  const { data, loading, fetchMore, ...result } = useQuery(GET_USER, {
+  const { data, loading, fetchMore, refetch, ...result } = useQuery(GET_USER, {
     fetchPolicy: 'cache-and-network',
     variables
   });
@@ -26,7 +26,7 @@ const useUserReviews = () => {
     });
   };
 
-  return { me: data?.me, fetchMore: handleFetchMore, loading, ...result  }
+  return { me: data?.me, fetchMore: handleFetchMore, refetch, loading, ...result  }
 
 };
 

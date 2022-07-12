@@ -19,7 +19,6 @@ const SingleRepository = () => {
   const reviews = repository.reviews.edges.map(edge => edge.node)
 
   const onEndReach = () => {
-    console.log('END');
     fetchMore();
   }
 

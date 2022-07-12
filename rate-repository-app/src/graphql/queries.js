@@ -73,6 +73,7 @@ export const GET_USER = gql`
             text
             rating
             createdAt
+            repositoryId
             user {
               id
               username

@@ -12,7 +12,6 @@ const useCreateReview = () => {
 
     rating = parseInt(rating);
     const response = await mutate({ variables: { repositoryName, ownerName, rating, review } });
-    console.log(response.data);
     navigate(`/repository/${response.data.createReview.repositoryId}`, {replace: true});
     return response
   }
