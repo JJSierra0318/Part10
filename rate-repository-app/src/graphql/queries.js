@@ -26,7 +26,7 @@ export const GET_REPOSITORIES = gql`
 `;
 
 export const GET_REPOSITORY = gql`
-query getRepo($id: ID!) {
+query getRepo($id: ID!, $first: Int, $after: String) {
   repository(id: $id) {
     id
     ownerAvatarUrl
@@ -38,7 +38,7 @@ query getRepo($id: ID!) {
     stargazersCount
     ratingAverage
     url
-    reviews {
+    reviews(first: $first, after: $after) {
       edges {
         node {
           id
@@ -50,6 +50,11 @@ query getRepo($id: ID!) {
             username
           }
         }
+      }
+      pageInfo {
+        startCursor
+        endCursor
+        hasNextPage
       }
     }
   }
