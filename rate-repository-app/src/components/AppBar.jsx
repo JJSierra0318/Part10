@@ -38,6 +38,9 @@ const AppBar = () => {
           <Pressable style={{ padding: 10 }}>
             <Link to='/newReview'><Text color='primary'>Create a review</Text></Link>
           </Pressable>
+          <Pressable style={{ padding: 10 }}>
+            <Link to='/userReviews'><Text color='primary'>My reviews</Text></Link>
+          </Pressable>
           <Pressable style={{ padding: 10 }} onPress={async () => {
             await authStorage.removeAccessToken()
             apolloClient.resetStore()

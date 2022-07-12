@@ -62,10 +62,30 @@ query getRepo($id: ID!, $first: Int, $after: String) {
 `
 
 export const GET_USER = gql`
-  query {
+  query getUser($includeReviews: Boolean = false, $first: Int, $after: String) {
     me {
       id
       username
+      reviews (first: $first, after: $after) @include(if: $includeReviews) {
+        edges {
+          node {
+            id
+            text
+            rating
+            createdAt
+            user {
+              id
+              username
+            }
+          }
+          cursor
+        }
+        pageInfo {
+          hasNextPage
+          startCursor
+          endCursor
+        }
+      }
     }
   }
 `;
